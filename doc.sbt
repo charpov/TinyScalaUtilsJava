@@ -1,14 +1,8 @@
-lazy val docoptions = taskKey[Unit]("Prints java options (doc)")
-ThisBuild / docoptions := {
-   println(Attributed.data((Compile / fullClasspath).value).mkString("-classpath\n", ":", ""))
-}
+import scala.sys.process._
 
 This / Compile / doc := {
-   import scala.sys.process._
-   val script = baseDirectory.value / "makedocs.sh"
-   val out    = baseDirectory.value / "docs"
-   s"zsh $script" ! streams.value.log
-   out
+   val classpath = Attributed.data((Compile / fullClasspath).value).mkString(":")
+   val script = (baseDirectory.value / "makedocs.sh").toString
+   Seq("zsh", script, classpath) ! streams.value.log
+   baseDirectory.value / "docs"
 }
-
-//This / Compile / doc := baseDirectory.value / "docs"
