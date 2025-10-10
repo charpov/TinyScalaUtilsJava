@@ -1,10 +1,8 @@
 ThisBuild / version      := "1.8.0"
 ThisBuild / scalaVersion := "3.3.6"
 
-val JSpecify = "org.jspecify" % "jspecify" % "1.0.0"
-//noinspection SbtDependencyVersionInspection
-// cannot upgrade JUnit until sbt.junit catches up
-val JUnit = "org.junit.jupiter" % "junit-jupiter" % "5.13.4"
+val JSpecify = "org.jspecify"      % "jspecify"      % "1.0.0"
+val JUnit    = "org.junit.jupiter" % "junit-jupiter" % "6.0.0"
 
 ThisBuild / crossPaths            := false
 ThisBuild / transitiveClassifiers := Seq("sources")
@@ -31,6 +29,6 @@ lazy val tinyscalautilsjava = (project in file(".")).settings(
     JSpecify,
     JUnit                  % Test,
     "io.github.charpov"   %% "tiny-scala-utils"  % version.value,
-    "com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test
+    "com.github.sbt.junit" % "jupiter-interface" % JupiterKeys.jupiterVersion.value % Test,
   ),
 )

@@ -1,3 +1,5 @@
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_central_credentials")
+
 ThisBuild / organization         := "io.github.charpov"
 ThisBuild / organizationName     := "charpov"
 ThisBuild / organizationHomepage := Some(url("https://github.com/charpov"))

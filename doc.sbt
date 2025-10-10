@@ -5,10 +5,8 @@ ThisBuild / docoptions := {
 
 This / Compile / doc := {
    import scala.sys.process._
-   val script = baseDirectory.value / "makedocs.sh"
-   val out    = baseDirectory.value / "docs"
-   s"zsh $script" ! streams.value.log
+   val makedocs = baseDirectory.value / "makedocs.sh"
+   val out      = baseDirectory.value / "docs"
+   s"zsh $makedocs" ! streams.value.log
    out
 }
-
-//This / Compile / doc := baseDirectory.value / "docs"
