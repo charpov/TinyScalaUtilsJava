@@ -1,5 +1,7 @@
 package tinyscalautils.java;
 
+import org.jspecify.annotations.Nullable;
+
 import java.util.function.Supplier;
 
 /**
@@ -33,15 +35,15 @@ public class Timing {
     return timer.timeOf(code);
   }
 
-  public static <A> TimingPair<A> timeIt(Supplier<? extends A> code) {
+  public static <A> TimingPair<A> timeIt(Supplier<? extends @Nullable A> code) {
     return timer.timeIt(code);
   }
 
-  public static <A> A delay(double seconds, long start, Supplier<? extends A> code) {
+  public static <A> A delay(double seconds, long start, Supplier<? extends @Nullable A> code) {
     return timer.delay(seconds, start, code);
   }
 
-  public static <A> A delay(double seconds, Supplier<? extends A> code) {
+  public static <A> A delay(double seconds, Supplier<? extends @Nullable A> code) {
     return timer.delay(seconds, code);
   }
 
