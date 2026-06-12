@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static tinyscalautils.java.Timing.*;
 
 public class TimingSuite {
@@ -29,6 +30,12 @@ public class TimingSuite {
     var timedPair = timeIt(() -> delay(1.0, () -> "X"));
     assertEquals(1.0, timedPair.time, 0.1);
     assertEquals("X", timedPair.value);
+  }
+
+  @Test
+  void testTimeItNull() {
+    var timedPair = timeIt(() -> null);
+    assertNull(timedPair.value);
   }
 
   @Test

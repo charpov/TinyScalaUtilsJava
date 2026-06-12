@@ -1,0 +1,60 @@
+import mill.*
+import mill.api.daemon.internal.TestReporter
+import mill.api.{ PathRef, Task }
+import mill.javalib.PublishModule
+import mill.javalib.publish.*
+import mill.scalalib.*
+import mill.util.Jvm
+
+object `package` extends ScalaModule, PublishModule:
+   def publishVersion = "1.9.0"
+   def scalaVersion   = "3.3.8"
+   def jvmVersion     = "17"
+
+   def mvnDeps =
+      Seq(
+        mvn"io.github.charpov::tiny-scala-utils::${publishVersion()}",
+        mvn"org.jspecify:jspecify::1.0.0"
+      )
+
+   object test extends ScalaTests, TestModule.Junit6:
+      def jupiterVersion = "6.1.0"
+      def testLogLevel = TestReporter.LogLevel.Warn
+
+   def scalacOptions =
+      Seq(
+        "-deprecation", // Emit warning and location for usages of deprecated APIs.
+        "-feature",     // Emit warning for usages of features that should be imported explicitly.
+        "-unchecked",   // Enable detailed unchecked (erasure) warnings.
+        "-language:noAutoTupling", // Disable automatic tupling.
+        "-Wunused:linted",         // Check unused imports and variables.
+        "-java-output-version:17", // Java version.
+        "-source:future"           // Source version.
+      )
+
+   def javacOptions = Seq("-Xlint:all,-processing", "--release", "17")
+
+   def javadocOptions =
+      Seq("-Xdoclint:none", "-doctitle", "TinyScalaUtils (Java bridges)", "-link",
+        "https://jspecify.dev/docs/api/")
+
+   def versionScheme = Some(VersionScheme.SemVerSpec)
+
+   def artifactName = "tiny-scala-utils-java"
+
+   def pomSettings =
+      PomSettings(
+        description = "Java bridges for the TinyScalaUtils library.",
+        organization = "io.github.charpov",
+        url = "https://github.com/charpov/TinyScalaUtilsJava",
+        licenses = Seq(License.`Apache-2.0`),
+        versionControl = VersionControl.github("charpov", "TinyScalaUtilsJava"),
+        developers = Seq(Developer("charpov", "Michel Charpentier", "https://github.com/charpov")),
+      )
+
+   // hack to remove the _3 from the artifact name
+   override def artifactSuffix = ""
+
+   // hacks to run javadoc instead of scalaDoc; see https://github.com/com-lihaoyi/mill/discussions/7261
+   override def docSources = allSources()
+   override def docJar = PathRef(Jvm.createJar(Task.dest / "out.jar", Seq(javadocGenerated().path)))

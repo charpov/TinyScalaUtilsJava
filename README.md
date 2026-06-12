@@ -8,7 +8,7 @@ Using `Gradle`:
 
 ```kotlin
 dependencies {
-  implementation("io.github.charpov:tiny-scala-utils-java:1.8.0")
+  implementation("io.github.charpov:tiny-scala-utils-java:1.9.0")
 }
 ```
 
