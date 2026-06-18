@@ -7,7 +7,7 @@ import mill.scalalib.*
 import mill.util.Jvm
 
 object `package` extends ScalaModule, PublishModule:
-   def publishVersion = "1.9.1"
+   def publishVersion = "1.10.0"
    def scalaVersion   = "3.9.0"
    def jvmVersion     = "17"
 
